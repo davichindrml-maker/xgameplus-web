@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ store.name }} | {{ store.slogan }}</title>
+    <meta name="description" content="{{ store.brand_display }} - Consolas, accesorios, reparación, mantenimiento e instalación de juegos digitales en San Luis Potosí.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container nav">
+            <a href="#inicio" class="brand">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo X Game Plus">
+                <div>
+                    <span class="brand-title">{{ store.brand_display }}</span>
+                    <span class="brand-subtitle">{{ store.slogan }}</span>
+                </div>
+            </a>
+            <nav>
+                <a href="#nosotros">Nosotros</a>
+                <a href="#servicios">Servicios</a>
+                <a href="#productos">Productos</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container flashes">
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div>
+                <h3>{{ store.brand_display }}</h3>
+                <p>{{ store.slogan }}</p>
+                <p>Experiencia desde {{ store.experience_since }}</p>
+            </div>
+            <div>
+                <h4>Ubicación</h4>
+                <p>{{ store.location }}</p>
+            </div>
+            <div>
+                <h4>Contacto</h4>
+                <p>Teléfono/WhatsApp: {{ store.phone }}</p>
+                <a href="{{ store.whatsapp_link }}" target="_blank" rel="noopener">Enviar WhatsApp</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

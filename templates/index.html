@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero" id="inicio">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+        <div class="hero-copy">
+            <span class="pill">Gaming + Computación</span>
+            <h1>{{ store.brand_display }}</h1>
+            <p>{{ store.about }}</p>
+            <div class="hero-buttons">
+                <a class="btn btn-primary" href="#contacto">Cotiza con nosotros</a>
+                <a class="btn btn-secondary" href="#servicios">Ver servicios</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="nosotros">
+    <div class="container grid-2">
+        <div>
+            <h2>Tu tienda de confianza en San Luis Potosí</h2>
+            <p>
+                Somos un local ubicado en <strong>{{ store.location }}</strong>, en una zona céntrica para que puedas visitarnos con facilidad.
+                Trabajamos con enfoque en videojuegos, computación y servicio técnico, buscando que cada cliente encuentre una solución real,
+                ya sea para comprar, reparar o mejorar su equipo.
+            </p>
+            <ul class="highlights">
+                {% for item in store.highlights %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="card image-card">
+            <img src="{{ url_for('static', filename='images/banner.png') }}" alt="Discos de videojuegos aesthetic">
+        </div>
+    </div>
+</section>
+
+<section class="section dark" id="servicios">
+    <div class="container">
+        <h2>Servicios</h2>
+        <div class="cards-grid">
+            {% for service in store.services %}
+            <article class="card service-card">
+                <h3>{{ service.title }}</h3>
+                <p>{{ service.description }}</p>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section" id="productos">
+    <div class="container">
+        <h2>Productos destacados</h2>
+        <p class="section-intro">Puedes actualizar esta sección más adelante con inventario real, precios, fotos y promociones.</p>
+        <div class="cards-grid">
+            {% for product in products %}
+            <article class="card product-card">
+                <span class="tag">{{ product.tag }}</span>
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description }}</p>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section dark">
+    <div class="container">
+        <h2>¿Por qué elegirnos?</h2>
+        <div class="cards-grid testimonials-grid">
+            {% for testimonial in testimonials %}
+            <article class="card testimonial-card">
+                <p>“{{ testimonial.text }}”</p>
+                <strong>{{ testimonial.name }}</strong>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section" id="contacto">
+    <div class="container grid-2">
+        <div>
+            <h2>Contacto</h2>
+            <p>¿Buscas una consola, una laptop gamer, accesorios o servicio técnico? Escríbenos y con gusto te atendemos.</p>
+            <div class="contact-details">
+                <p><strong>Ubicación:</strong> {{ store.location }}</p>
+                <p><strong>Experiencia:</strong> desde {{ store.experience_since }}</p>
+                {% for hour in store.hours %}
+                <p><strong>Horario:</strong> {{ hour }}</p>
+                {% endfor %}
+            </div>
+            <a class="btn btn-primary" href="{{ store.whatsapp_link }}" target="_blank" rel="noopener">Abrir WhatsApp</a>
+        </div>
+        <form class="card contact-form" action="{{ url_for('contact') }}" method="post">
+            <label for="name">Nombre</label>
+            <input id="name" name="name" type="text" placeholder="Tu nombre">
+
+            <label for="email">Correo</label>
+            <input id="email" name="email" type="email" placeholder="tucorreo@ejemplo.com">
+
+            <label for="message">Mensaje</label>
+            <textarea id="message" name="message" rows="6" placeholder="Cuéntanos qué producto o servicio necesitas"></textarea>
+
+            <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+        </form>
+    </div>
+</section>
+{% endblock %}
