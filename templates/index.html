@@ -9,8 +9,8 @@
             <h1>{{ store.brand_display }}</h1>
             <p>{{ store.about }}</p>
             <div class="hero-buttons">
-                <a class="btn btn-primary" href="#contacto">Cotiza con nosotros</a>
-                <a class="btn btn-secondary" href="#servicios">Ver servicios</a>
+                <a class="btn btn-primary" href="#productos">Ver producto destacado</a>
+                <a class="btn btn-secondary" href="#contacto">Cotiza con nosotros</a>
             </div>
         </div>
     </div>
@@ -53,8 +53,48 @@
 
 <section class="section" id="productos">
     <div class="container">
-        <h2>Productos destacados</h2>
-        <p class="section-intro">Puedes actualizar esta sección más adelante con inventario real, precios, fotos y promociones.</p>
+        <h2>Producto destacado</h2>
+        <p class="section-intro">Ya quedó integrada la primera publicación real de la tienda con fotos optimizadas para web y Marketplace.</p>
+
+        <article class="card featured-product">
+            <div class="featured-copy">
+                <span class="tag featured-tag">{{ featured_product.tag }}</span>
+                <h3>{{ featured_product.name }}</h3>
+                <p>{{ featured_product.description }}</p>
+
+                <div class="price-box">
+                    <div>
+                        <span class="price-label">Precio XGAMEPLUS</span>
+                        <strong class="price-main">{{ featured_product.price }}</strong>
+                    </div>
+                    <div>
+                        <span class="price-label">Precio habitual</span>
+                        <span class="price-old">{{ featured_product.regular_price }}</span>
+                    </div>
+                </div>
+
+                <div class="features-list">
+                    {% for feature in featured_product.features %}
+                    <span>{{ feature }}</span>
+                    {% endfor %}
+                </div>
+
+                <div class="hero-buttons">
+                    <a class="btn btn-primary" href="{{ store.whatsapp_link }}" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+                    <a class="btn btn-secondary" href="#contacto">Solicitar más info</a>
+                </div>
+            </div>
+
+            <div class="product-gallery">
+                {% for image in featured_product.images %}
+                <div class="gallery-item">
+                    <img src="{{ url_for('static', filename=image) }}" alt="{{ featured_product.short_name }} foto {{ loop.index }}">
+                </div>
+                {% endfor %}
+            </div>
+        </article>
+
+        <h2 class="subsection-title">Más productos y categorías</h2>
         <div class="cards-grid">
             {% for product in products %}
             <article class="card product-card">

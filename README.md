@@ -1,6 +1,6 @@
 # XGAMEPLUS - Sitio web con Flask
 
-Sitio web básico para la tienda **XGAMEPLUS**, hecho con **Python + Flask**, listo para subir a GitHub.
+Sitio web básico para la tienda **XGAMEPLUS**, hecho con **Python + Flask**, listo para subir a GitHub y desplegar en **Render**.
 
 ## Estructura
 
@@ -8,6 +8,7 @@ Sitio web básico para la tienda **XGAMEPLUS**, hecho con **Python + Flask**, li
 xgameplus_webapp/
 ├── app.py
 ├── requirements.txt
+├── render.yaml
 ├── README.md
 ├── static/
 │   ├── css/
@@ -16,7 +17,12 @@ xgameplus_webapp/
 │   │   └── main.js
 │   └── images/
 │       ├── banner.png
-│       └── logo.png
+│       ├── logo.png
+│       └── products/
+│           ├── rtx5070_1.jpg
+│           ├── rtx5070_2.jpg
+│           ├── rtx5070_3.jpg
+│           └── rtx5070_4.jpg
 └── templates/
     ├── base.html
     └── index.html
@@ -43,20 +49,27 @@ python app.py
 http://127.0.0.1:5000
 ```
 
+## Listo para Render
+
+Este proyecto ya quedó preparado para desplegarse en Render.
+
+### Opción 1: usando `render.yaml`
+Solo sube el repo a GitHub y en Render importa el repositorio. Render detectará la configuración automáticamente.
+
+### Opción 2: configuración manual en Render
+Usa estos valores:
+
+- **Environment:** Python
+- **Build Command:** `pip install -r requirements.txt`
+- **Start Command:** `gunicorn app:app`
+
 ## Qué puedes editar rápido
 
 - Datos del negocio: en `app.py`
+- Producto destacado y fotos: en `app.py` y `static/images/products/`
 - Colores y diseño: en `static/css/styles.css`
 - Textos principales: en `templates/index.html`
 - WhatsApp/Facebook reales: en `app.py`
-
-## Recomendación para GitHub
-
-Sube esta carpeta tal cual como repositorio. Luego, si quieres desplegarla gratis, puedes usar:
-
-- Render
-- Railway
-- PythonAnywhere
 
 ## Nota
 

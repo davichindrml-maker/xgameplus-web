@@ -1,7 +1,8 @@
+import os
 from flask import Flask, render_template, request, flash, redirect, url_for
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'cambia-esta-clave-por-una-mas-segura'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'cambia-esta-clave-por-una-mas-segura')
 
 STORE_INFO = {
     'name': 'XGAMEPLUS',
@@ -50,10 +51,35 @@ STORE_INFO = {
     )
 }
 
-PRODUCTS = [
+FEATURED_PRODUCT = {
+    'name': 'ASUS TUF Gaming GeForce RTX 5070',
+    'short_name': 'RTX 5070 ASUS TUF Gaming',
+    'tag': 'Producto destacado',
+    'price': '$10,000 MXN',
+    'regular_price': '$12,000 - $14,000 MXN',
+    'status': 'Nueva',
+    'description': (
+        'Tarjeta gráfica de nueva generación ideal para gaming de alto rendimiento, streaming y creación de contenido. '
+        'Excelente oportunidad para quien busca potencia, estética gamer y precio competitivo.'
+    ),
+    'features': [
+        '12GB GDDR7',
+        'DLSS 4 y Ray Tracing',
+        'ASUS TUF Gaming',
+        'Lista para instalar'
+    ],
+    'images': [
+        'images/products/rtx5070_1.jpg',
+        'images/products/rtx5070_2.jpg',
+        'images/products/rtx5070_3.jpg',
+        'images/products/rtx5070_4.jpg'
+    ]
+}
+
+OTHER_PRODUCTS = [
     {
         'name': 'Xbox y consolas en existencia',
-        'description': 'Modelos disponibles según inventario. Ideales para publicaciones futuras con precio y fotos reales.',
+        'description': 'Modelos disponibles según inventario. Ideal para publicaciones futuras con precio y fotos reales.',
         'tag': 'Gaming'
     },
     {
@@ -82,7 +108,13 @@ TESTIMONIALS = [
 
 @app.route('/')
 def home():
-    return render_template('index.html', store=STORE_INFO, products=PRODUCTS, testimonials=TESTIMONIALS)
+    return render_template(
+        'index.html',
+        store=STORE_INFO,
+        featured_product=FEATURED_PRODUCT,
+        products=OTHER_PRODUCTS,
+        testimonials=TESTIMONIALS,
+    )
 
 
 @app.route('/contacto', methods=['POST'])
@@ -95,10 +127,11 @@ def contact():
         flash('Completa todos los campos antes de enviar el mensaje.', 'error')
         return redirect(url_for('home') + '#contacto')
 
-    # Aquí después puedes conectar correo, WhatsApp API o guardar en base de datos.
     flash('Tu mensaje se registró correctamente. Ahora puedes conectar este formulario a correo o WhatsApp.', 'success')
     return redirect(url_for('home') + '#contacto')
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    debug = os.environ.get('FLASK_DEBUG', 'True').lower() == 'true'
+    app.run(host='0.0.0.0', port=port, debug=debug)
